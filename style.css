@@ -13,8 +13,8 @@
     --danger: #FF3B30;
     --warn: #FF9F0A;
     --safe: #34C759;
-    --font: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Helvetica Neue', sans-serif;
-    --mono: 'IBM Plex Mono', 'SF Mono', 'Menlo', monospace;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Helvetica Neue', sans-serif;
+    --mono: 'JetBrains Mono', 'SF Mono', 'Menlo', monospace;
     --r-sm: 8px;
     --r-md: 12px;
     --r-lg: 14px;
@@ -66,7 +66,7 @@
   .topbar-title span:first-child {
     font-size: 15px;
     font-weight: 700;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.6px;
     color: var(--text);
   }
   .topbar-title span:last-child {
@@ -74,7 +74,7 @@
     font-weight: 500;
     color: var(--text3);
     font-family: var(--mono);
-    letter-spacing: 0.3px;
+    letter-spacing: 0.2px;
   }
 
   #stage-chips {
@@ -135,7 +135,7 @@
   .section-label {
     font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.6px;
     color: var(--text3);
     text-transform: uppercase;
     margin-bottom: 12px;
@@ -179,7 +179,7 @@
     align-items: baseline;
     margin-bottom: 8px;
   }
-  .slider-name { font-size: 13px; color: var(--text2); font-weight: 500; }
+  .slider-name { font-size: 13px; color: var(--text2); font-weight: 500; letter-spacing: -0.1px; }
   .slider-value {
     font-family: var(--mono);
     font-size: 14px;
@@ -227,7 +227,7 @@
     font-size: 56px;
     font-weight: 600;
     line-height: 1;
-    letter-spacing: -3px;
+    letter-spacing: -4px;
     margin-bottom: 2px;
     transition: color 0.35s;
   }
@@ -236,20 +236,21 @@
     color: var(--text3);
     font-family: var(--mono);
     margin-bottom: 14px;
-    letter-spacing: 0.1px;
+    letter-spacing: 0.2px;
   }
   .result-badge {
     display: inline-block;
     padding: 4px 14px;
     border-radius: var(--r-pill);
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--font);
     margin-bottom: 8px;
-    letter-spacing: 0.3px;
+    letter-spacing: -0.2px;
     border: none;
   }
   .result-desc {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text2);
     line-height: 1.65;
   }
@@ -416,7 +417,7 @@
     font-weight: 600;
     flex: 1;
     color: var(--text);
-    letter-spacing: -0.2px;
+    letter-spacing: -0.3px;
   }
   .cat-counts { display: flex; gap: 5px; align-items: center; }
   .cat-count-badge {
@@ -464,19 +465,19 @@
   }
 
   .risk-badge {
-    font-size: 10px;
-    padding: 3px 9px;
+    font-size: 11px;
+    padding: 3px 10px;
     border-radius: var(--r-pill);
-    font-weight: 700;
+    font-weight: 600;
     flex-shrink: 0;
-    font-family: var(--mono);
-    letter-spacing: 0.1px;
+    font-family: var(--font);
+    letter-spacing: -0.2px;
   }
   .risk-ci { background: rgba(255,59,48,0.10); color: #D92B23; }
   .risk-ca { background: rgba(255,159,10,0.10); color: #a06500; }
   .risk-safe { background: rgba(52,199,89,0.09); color: #1d7a3c; }
 
-  .drug-name { font-size: 13px; font-weight: 500; flex: 1; color: var(--text); }
+  .drug-name { font-size: 13px; font-weight: 600; flex: 1; color: var(--text); letter-spacing: -0.2px; }
   .drug-threshold {
     font-size: 10px;
     color: var(--text3);
@@ -502,9 +503,9 @@
   .drug-card.open .drug-card-body { display: block; }
 
   .drug-reason {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text2);
-    line-height: 1.65;
+    line-height: 1.7;
     padding-top: 10px;
   }
 
@@ -516,20 +517,21 @@
     align-items: center;
   }
   .alt-label {
-    font-size: 10px;
+    font-size: 11px;
     color: var(--text3);
     font-weight: 600;
     letter-spacing: 0.3px;
     margin-right: 2px;
   }
   .alt-tag {
-    font-size: 11px;
-    padding: 2px 9px;
+    font-size: 12px;
+    padding: 2px 10px;
     background: rgba(0,122,255,0.07);
     border-radius: var(--r-pill);
     color: var(--accent);
-    font-family: var(--mono);
+    font-family: var(--font);
     font-weight: 500;
+    letter-spacing: -0.1px;
   }
 
   .empty-state {
