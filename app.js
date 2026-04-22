@@ -289,6 +289,7 @@ function switchTab(tab) {
   btnDrugs.classList.toggle('active',  !isInput);
   const tc = document.getElementById('topbar-controls');
   if (tc && isMobile()) tc.style.display = (!isInput) ? 'flex' : 'none';
+  (isInput ? left : right).scrollTop = 0;
 }
 
 function renderMobileChips() {
