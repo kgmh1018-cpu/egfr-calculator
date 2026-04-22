@@ -265,16 +265,12 @@ function repositionControls() {
   const tc  = document.getElementById('topbar-controls');
   const fb  = document.getElementById('filter-bar');
   const ids = ['expand-all-btn', 'show-imp-wrap', 'show-safe-wrap'];
-  const dest = isMobileOrTablet() ? tc : fb;
+  const dest = isMobileOrTablet() && !isMobile() ? tc : fb;
   ids.forEach(id => {
     const el = document.getElementById(id);
     if (el && el.parentElement !== dest) dest.appendChild(el);
   });
-  if (!isMobileOrTablet()) {
-    tc.style.display = 'none';
-  } else if (!isMobile()) {
-    tc.style.display = 'flex';
-  }
+  tc.style.display = (isMobileOrTablet() && !isMobile()) ? 'flex' : 'none';
 }
 
 function switchTab(tab) {
@@ -287,8 +283,6 @@ function switchTab(tab) {
   right.classList.toggle('mob-active', !isInput);
   btnInput.classList.toggle('active',  isInput);
   btnDrugs.classList.toggle('active',  !isInput);
-  const tc = document.getElementById('topbar-controls');
-  if (tc && isMobile()) tc.style.display = (!isInput) ? 'flex' : 'none';
   (isInput ? left : right).scrollTop = 0;
 }
 
