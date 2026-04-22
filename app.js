@@ -259,6 +259,23 @@ function render() {
 // ═══════════════════════════════════════════════════════════
 
 function isMobile() { return window.innerWidth <= 640; }
+function isMobileOrTablet() { return window.innerWidth <= 1024; }
+
+function repositionControls() {
+  const tc  = document.getElementById('topbar-controls');
+  const fb  = document.getElementById('filter-bar');
+  const ids = ['expand-all-btn', 'show-imp-wrap', 'show-safe-wrap'];
+  const dest = isMobileOrTablet() ? tc : fb;
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.parentElement !== dest) dest.appendChild(el);
+  });
+  if (!isMobileOrTablet()) {
+    tc.style.display = 'none';
+  } else if (!isMobile()) {
+    tc.style.display = 'flex';
+  }
+}
 
 function switchTab(tab) {
   const left     = document.getElementById('left-panel');
@@ -270,6 +287,8 @@ function switchTab(tab) {
   right.classList.toggle('mob-active', !isInput);
   btnInput.classList.toggle('active',  isInput);
   btnDrugs.classList.toggle('active',  !isInput);
+  const tc = document.getElementById('topbar-controls');
+  if (tc && isMobile()) tc.style.display = (!isInput) ? 'flex' : 'none';
 }
 
 function renderMobileChips() {
@@ -344,14 +363,15 @@ document.querySelectorAll('.filter-tab').forEach(tab => {
   });
 });
 
-document.getElementById('show-safe-cb').addEventListener('change', e => {
-  state.showSafe = e.target.checked;
+document.getElementById('show-safe-wrap').addEventListener('click', () => {
+  state.showSafe = !state.showSafe;
+  document.getElementById('show-safe-wrap').classList.toggle('active', state.showSafe);
   renderDrugList();
 });
 
-document.getElementById('show-imp-cb').addEventListener('change', e => {
-  state.showImp = e.target.checked;
-  document.getElementById('show-imp-wrap').classList.toggle('active', e.target.checked);
+document.getElementById('show-imp-wrap').addEventListener('click', () => {
+  state.showImp = !state.showImp;
+  document.getElementById('show-imp-wrap').classList.toggle('active', state.showImp);
   renderBadges();
   renderDrugList();
 });
@@ -378,6 +398,7 @@ window.addEventListener('resize', () => {
     } else if (!left.classList.contains('mob-active') && !right.classList.contains('mob-active')) {
       switchTab('input');
     }
+    repositionControls();
     renderMobileChips();
   }, 150);
 });
@@ -392,5 +413,6 @@ document.getElementById('egfr-val').textContent = state.gfr.toFixed(1);
 document.getElementById('scr-val').textContent  = state.scr.toFixed(2);
 
 if (isMobile()) switchTab('input');
+repositionControls();
 
 render();

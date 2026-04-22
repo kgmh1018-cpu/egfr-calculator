@@ -16,6 +16,7 @@
     <span>eGFR 계산기</span>
     <span>CKD-EPI 2021</span>
   </div>
+  <div id="topbar-controls"></div>
   <div id="stage-chips"></div>
 </div>
 
@@ -24,7 +25,6 @@
   <div id="left-panel">
 
     <div class="panel-section">
-      <div class="section-label">성별</div>
       <div id="gender-toggle">
         <button class="gender-btn active" data-g="male">♂ 남성</button>
         <button class="gender-btn" data-g="female">♀ 여성</button>
@@ -32,7 +32,6 @@
     </div>
 
     <div class="panel-section">
-      <div class="section-label">입력값</div>
       <div class="slider-row">
         <div class="slider-header">
           <span class="slider-name">나이</span>
@@ -57,7 +56,6 @@
     </div>
 
     <div class="panel-section">
-      <div class="section-label">결과</div>
       <div id="result-box">
         <div class="result-gfr" id="result-gfr">—</div>
         <div class="result-unit">mL/min/1.73m²</div>
@@ -83,12 +81,8 @@
       <button class="filter-tab" data-cat="기타">기타 <span class="tab-badge" id="badge-기타">0</span></button>
       <div class="filter-spacer"></div>
       <button id="expand-all-btn">펼치기 ▼</button>
-      <label id="show-imp-wrap">
-        <input type="checkbox" id="show-imp-cb"> ⭐ 중요약물만
-      </label>
-      <label id="show-safe-wrap">
-        <input type="checkbox" id="show-safe-cb" checked> 안전한 약 보기
-      </label>
+      <button id="show-imp-wrap">⭐ 중요약물만</button>
+      <button id="show-safe-wrap" class="active">안전한 약 보기</button>
     </div>
 
     <div id="drug-list"></div>
