@@ -27,6 +27,7 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  button, input, label { touch-action: manipulation; }
 
   body {
     font-family: var(--font);
@@ -120,6 +121,7 @@
     flex-direction: column;
     overflow-y: auto;
     overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
     padding: 10px 0;
     gap: 2px;
   }
@@ -385,6 +387,7 @@
   #drug-list {
     flex: 1;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     padding: 12px 14px 24px;
   }
   #drug-list::-webkit-scrollbar { width: 5px; }
@@ -556,8 +559,7 @@
     position: fixed;
     bottom: 0; left: 0; right: 0;
     z-index: 100;
-    height: calc(56px + env(safe-area-inset-bottom));
-    padding-bottom: env(safe-area-inset-bottom);
+    height: 56px;
   }
   .mob-tab {
     flex: 1;
@@ -613,10 +615,10 @@
     #main { flex-direction: column; overflow: hidden; }
     #left-panel {
       width: 100%; border-right: none; flex-shrink: 0;
-      overflow-y: auto; display: none; flex: 1; padding-bottom: calc(56px + env(safe-area-inset-bottom));
+      overflow-y: auto; display: none; flex: 1; padding-bottom: 56px;
     }
     #left-panel.mob-active { display: flex; }
-    #right-panel { display: none; flex: 1; overflow: hidden; padding-bottom: calc(56px + env(safe-area-inset-bottom)); }
+    #right-panel { display: none; flex: 1; overflow: hidden; padding-bottom: 56px; }
     #right-panel.mob-active { display: flex; }
     #mobile-tab-nav { display: flex; }
     input[type=range] { height: 5px; }
