@@ -11,7 +11,7 @@ const STAGES = [
 
 const DRUGS = [
   {
-    cat: '혈당강하제', imp: true,
+    cat: '혈당강하제', imp: false,
     name: 'Metformin',
     ci_at: 30, ca_at: 45,
     threshold: 'GFR < 30 금기\n30–45 주의',
@@ -35,7 +35,7 @@ const DRUGS = [
     alts: ['Insulin', 'DPP-4i'],
   },
   {
-    cat: '혈당강하제', imp: true,
+    cat: '혈당강하제', imp: false,
     name: 'DPP-4 억제제 (Sitagliptin 등)',
     ci_at: 0, ca_at: 45,
     threshold: 'Linagliptin 전 단계 가능\n타 DPP-4i GFR < 45 감량',
@@ -99,7 +99,7 @@ const DRUGS = [
     alts: ['Amlodipine', 'Beta-blocker'],
   },
   {
-    cat: '심혈관계', imp: false,
+    cat: '심혈관계', imp: true,
     name: 'Spironolactone',
     ci_at: 30, ca_at: 45,
     threshold: 'GFR < 30 금기\n30–45 주의',
@@ -139,7 +139,7 @@ const DRUGS = [
     alts: ['Apixaban (GFR ≥ 25)', 'Warfarin'],
   },
   {
-    cat: '항응고제', imp: false,
+    cat: '항응고제', imp: true,
     name: 'Rivaroxaban',
     ci_at: 15, ca_at: 30,
     threshold: 'GFR < 15 금기\n15–30 감량',
@@ -147,7 +147,7 @@ const DRUGS = [
     alts: ['Apixaban', 'Warfarin'],
   },
   {
-    cat: '항응고제', imp: false,
+    cat: '항응고제', imp: true,
     name: 'LMWH (Enoxaparin)',
     ci_at: 20, ca_at: 30,
     threshold: 'GFR < 20 금기\n20–30 주의',
@@ -155,7 +155,7 @@ const DRUGS = [
     alts: ['UFH (미분획 헤파린)'],
   },
   {
-    cat: '기타', imp: false,
+    cat: '기타', imp: true,
     name: 'Lithium',
     ci_at: 0, ca_at: 45,
     threshold: 'GFR < 45 TDM 필수',
@@ -171,7 +171,7 @@ const DRUGS = [
     alts: ['NSAIDs (신기능 허용 시)', 'Corticosteroid'],
   },
   {
-    cat: '기타', imp: false,
+    cat: '기타', imp: true,
     name: 'Allopurinol',
     ci_at: 0, ca_at: 30,
     threshold: 'GFR < 30 용량 감량',
@@ -203,7 +203,7 @@ const DRUGS = [
     alts: ['Fosfomycin', 'Nitrofurantoin (GFR ≥ 45)'],
   },
   {
-    cat: '항생제', imp: false,
+    cat: '항생제', imp: true,
     name: 'Acyclovir / Valacyclovir',
     ci_at: 0, ca_at: 50,
     threshold: 'GFR < 50 감량 필수\n결정뇨 주의',
@@ -211,7 +211,7 @@ const DRUGS = [
     alts: ['용량 감량 후 동일 약제 유지'],
   },
   {
-    cat: '심혈관계', imp: true,
+    cat: '심혈관계', imp: false,
     name: 'Thiazide 이뇨제 (Hydrochlorothiazide 등)',
     ci_at: 0, ca_at: 30,
     threshold: 'GFR < 30 효과 소실',
@@ -219,7 +219,7 @@ const DRUGS = [
     alts: ['Furosemide', 'Torsemide'],
   },
   {
-    cat: '항응고제', imp: false,
+    cat: '항응고제', imp: true,
     name: 'Apixaban',
     ci_at: 25, ca_at: 30,
     threshold: 'GFR < 25 금기\n25–30 주의',
