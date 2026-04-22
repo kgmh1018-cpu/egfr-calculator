@@ -366,6 +366,22 @@ expandBtn.addEventListener('click', () => {
   renderDrugList();
 });
 
+let _resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(_resizeTimer);
+  _resizeTimer = setTimeout(() => {
+    const left  = document.getElementById('left-panel');
+    const right = document.getElementById('right-panel');
+    if (!isMobile()) {
+      left.classList.remove('mob-active');
+      right.classList.remove('mob-active');
+    } else if (!left.classList.contains('mob-active') && !right.classList.contains('mob-active')) {
+      switchTab('input');
+    }
+    renderMobileChips();
+  }, 150);
+});
+
 // ═══════════════════════════════════════════════════════════
 // § INIT
 // ═══════════════════════════════════════════════════════════
