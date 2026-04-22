@@ -232,17 +232,75 @@ function renderBadges() {
   if (allBadge) { allBadge.textContent = total; allBadge.className = 'tab-badge' + (total === 0 ? ' zero' : ''); }
 }
 
+const SWIPE_CATS = ['all', ...CATS];
+
 function renderDrugList() {
   const container = document.getElementById('drug-list');
   container.innerHTML = '';
-  const catsToShow = state.activeCat === 'all' ? CATS : [state.activeCat];
-  catsToShow.forEach(cat => {
-    const acc = buildCatAccordion(cat, state.gfr);
-    if (acc) container.appendChild(acc);
-  });
-  if (container.children.length === 0) {
-    container.innerHTML = '<div class="empty-state">현재 GFR에서 해당 계열 약물 위험 없음</div>';
+
+  if (isMobileOrTablet()) {
+    container.classList.add('swipe-mode');
+    SWIPE_CATS.forEach(cat => {
+      const slide = document.createElement('div');
+      slide.className = 'drug-slide';
+      slide.dataset.cat = cat;
+      if (cat === 'all') {
+        CATS.forEach(c => {
+          const acc = buildCatAccordion(c, state.gfr);
+          if (acc) slide.appendChild(acc);
+        });
+      } else {
+        state.catOpen[cat] = true;
+        const acc = buildCatAccordion(cat, state.gfr);
+        if (acc) slide.appendChild(acc);
+      }
+      if (slide.children.length === 0) {
+        slide.innerHTML = '<div class="empty-state">현재 GFR에서 해당 계열 약물 위험 없음</div>';
+      }
+      container.appendChild(slide);
+    });
+    const idx = Math.max(0, SWIPE_CATS.indexOf(state.activeCat));
+    requestAnimationFrame(() => { container.scrollLeft = idx * container.clientWidth; });
+    setupSwipeSync(container);
+  } else {
+    container.classList.remove('swipe-mode');
+    const catsToShow = state.activeCat === 'all' ? CATS : [state.activeCat];
+    catsToShow.forEach(cat => {
+      const acc = buildCatAccordion(cat, state.gfr);
+      if (acc) container.appendChild(acc);
+    });
+    if (container.children.length === 0) {
+      container.innerHTML = '<div class="empty-state">현재 GFR에서 해당 계열 약물 위험 없음</div>';
+    }
   }
+}
+
+function updateTabIndicator(cat) {
+  const indicator = document.getElementById('tab-indicator');
+  const activeTab = document.querySelector(`.filter-tab[data-cat="${cat}"]`);
+  if (!indicator || !activeTab) return;
+  indicator.style.width     = activeTab.offsetWidth + 'px';
+  indicator.style.transform = `translateX(${activeTab.offsetLeft}px)`;
+}
+
+function setupSwipeSync(container) {
+  if (container._swipeObserver) container._swipeObserver.disconnect();
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.intersectionRatio < 0.5) return;
+      const cat = entry.target.dataset.cat;
+      if (cat === state.activeCat) return;
+      state.activeCat = cat;
+      document.querySelectorAll('.filter-tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.cat === cat);
+      });
+      updateTabIndicator(cat);
+      const activeTab = document.querySelector(`.filter-tab[data-cat="${cat}"]`);
+      if (activeTab) activeTab.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+    });
+  }, { root: container, threshold: 0.5 });
+  container._swipeObserver = observer;
+  container.querySelectorAll('.drug-slide').forEach(s => observer.observe(s));
 }
 
 function render() {
@@ -252,6 +310,7 @@ function render() {
   renderDrugList();
   renderMobileChips();
   updateDrugAlert();
+  updateTabIndicator(state.activeCat);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -283,6 +342,7 @@ function switchTab(tab) {
   right.classList.toggle('mob-active', !isInput);
   btnInput.classList.toggle('active',  isInput);
   btnDrugs.classList.toggle('active',  !isInput);
+  document.body.classList.toggle('mob-drugs', !isInput);
   (isInput ? left : right).scrollTop = 0;
 }
 
@@ -354,7 +414,14 @@ document.querySelectorAll('.filter-tab').forEach(tab => {
     state.activeCat = tab.dataset.cat;
     document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
-    renderDrugList();
+    const container = document.getElementById('drug-list');
+    if (isMobileOrTablet() && container.classList.contains('swipe-mode')) {
+      const idx = Math.max(0, SWIPE_CATS.indexOf(state.activeCat));
+      container.scrollTo({ left: idx * container.clientWidth, behavior: 'smooth' });
+      updateTabIndicator(state.activeCat);
+    } else {
+      renderDrugList();
+    }
   });
 });
 
@@ -395,6 +462,7 @@ window.addEventListener('resize', () => {
     }
     repositionControls();
     renderMobileChips();
+    renderDrugList();
   }, 150);
 });
 
@@ -411,3 +479,4 @@ if (isMobile()) switchTab('input');
 repositionControls();
 
 render();
+updateTabIndicator(state.activeCat);
