@@ -324,12 +324,28 @@ function repositionControls() {
   const tc  = document.getElementById('topbar-controls');
   const fb  = document.getElementById('filter-bar');
   const ids = ['expand-all-btn', 'show-imp-wrap', 'show-safe-wrap'];
-  const dest = isMobileOrTablet() && !isMobile() ? tc : fb;
-  ids.forEach(id => {
-    const el = document.getElementById(id);
-    if (el && el.parentElement !== dest) dest.appendChild(el);
-  });
-  tc.style.display = (isMobileOrTablet() && !isMobile()) ? 'flex' : 'none';
+
+  if (isMobile()) {
+    const el = document.getElementById('expand-all-btn');
+    if (el && el.parentElement !== fb) fb.appendChild(el);
+    document.getElementById('show-imp-wrap').style.display  = 'none';
+    document.getElementById('show-safe-wrap').style.display = 'none';
+    document.getElementById('bar-divider').style.display    = 'block';
+    document.getElementById('more-btn').style.display       = 'flex';
+    tc.style.display = 'none';
+  } else {
+    document.getElementById('show-imp-wrap').style.display  = '';
+    document.getElementById('show-safe-wrap').style.display = '';
+    document.getElementById('bar-divider').style.display    = 'none';
+    document.getElementById('more-btn').style.display       = 'none';
+    document.getElementById('more-dropdown').classList.remove('open');
+    const dest = isMobileOrTablet() ? tc : fb;
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.parentElement !== dest) dest.appendChild(el);
+    });
+    tc.style.display = isMobileOrTablet() ? 'flex' : 'none';
+  }
 }
 
 function switchTab(tab) {
@@ -446,6 +462,37 @@ expandBtn.addEventListener('click', () => {
   DRUGS.forEach(d => { state.drugOpen[d.name] = allExpanded; });
   expandBtn.textContent = allExpanded ? '접기 ▲' : '펼치기 ▼';
   renderDrugList();
+});
+
+const moreBtn      = document.getElementById('more-btn');
+const moreDropdown = document.getElementById('more-dropdown');
+
+moreBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  moreDropdown.classList.toggle('open');
+  moreBtn.classList.toggle('active', moreDropdown.classList.contains('open'));
+});
+
+document.getElementById('more-imp').addEventListener('click', () => {
+  state.showImp = !state.showImp;
+  document.getElementById('show-imp-wrap').classList.toggle('active', state.showImp);
+  document.getElementById('more-imp').classList.toggle('active', state.showImp);
+  moreBtn.classList.toggle('has-active', state.showImp || state.showSafe === false);
+  renderBadges();
+  renderDrugList();
+});
+
+document.getElementById('more-safe').addEventListener('click', () => {
+  state.showSafe = !state.showSafe;
+  document.getElementById('show-safe-wrap').classList.toggle('active', state.showSafe);
+  document.getElementById('more-safe').classList.toggle('active', state.showSafe);
+  moreBtn.classList.toggle('has-active', state.showImp || state.showSafe === false);
+  renderDrugList();
+});
+
+document.addEventListener('click', () => {
+  moreDropdown.classList.remove('open');
+  moreBtn.classList.remove('active');
 });
 
 let _resizeTimer;
