@@ -1,5 +1,5 @@
 # CLAUDE.md — eGFR 계산기 프로젝트 컨텍스트
-
+https://kgmh1018-cpu.github.io/egfr-calculator/
 ## 프로젝트 개요
 CKD-EPI 2021 공식 기반 eGFR 계산기 + CKD 단계별 신장 위험 약물 안내 웹앱.
 순수 바닐라 JS / CSS / HTML. 빌드 도구 없음. 외부 의존성 없음.
